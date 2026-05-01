@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Employee LIST</title>
+    <title>Department LIST</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -12,69 +12,38 @@
 <body>
 
 <div class="container mt-4">
-    <h1 class="text-center mb-4">Danh sach nhan vien 2026</h1>
+    <h1 class="text-center mb-4">Danh sach phong ban</h1>
 
     <div class="mb-3">
-        <a th:href="@{/employees/add}" class="btn btn-primary">Them nhan vien</a>
-        <a th:href="@{/departments}" class="btn btn-secondary">Danh sach phong ban</a>
+        <a th:href="@{/departments/add}" class="btn btn-primary">Them phong ban</a>
+        <a th:href="@{/employees}" class="btn btn-secondary">Danh sach nhan vien</a>
     </div>
-
-    <form action="" class="mb-3">
-        <div class="form-row align-items-center">
-            <div class="col-auto">
-                <input type="text"
-                       class="form-control"
-                       placeholder="Nhap ten nhan vien can tim...">
-            </div>
-
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary">Search</button>
-            </div>
-        </div>
-    </form>
 
     <table class="table table-bordered table-hover">
         <thead class="thead-dark">
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Age</th>
-            <th>Avatar</th>
-            <th>Status</th>
-            <th>Department</th>
+            <th>Location</th>
             <th colspan="2">Action</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="e : ${employees}">
-            <td th:text="${e.id}"></td>
-            <td th:text="${e.name}"></td>
-            <td th:text="${e.age}"></td>
+        <tr th:each="department : ${departments}">
+            <td th:text="${department.id}"></td>
+            <td th:text="${department.name}"></td>
+            <td th:text="${department.location}"></td>
 
             <td>
-                <img th:if="${e.avatar != null && e.avatar != ''}"
-                     th:src="@{'/images/' + ${e.avatar}}"
-                     alt="avatar"
-                     width="70"
-                     height="70">
-
-                <span th:unless="${e.avatar != null && e.avatar != ''}">
-                    No avatar
-                </span>
-            </td>
-
-            <td th:text="${e.status}"></td>
-            <td th:text="${e.department != null ? e.department.name + ' - ' + e.department.location : 'Chua co phong ban'}"></td>
-            <td>
-                <a th:href="@{/employees/edit/{id}(id=${e.id})}"
+                <a th:href="@{/departments/edit/{id}(id=${department.id})}"
                    class="btn btn-warning">
                     Edit
                 </a>
             </td>
 
             <td>
-                <a th:href="@{/employees/delete/{id}(id=${e.id})}"
+                <a th:href="@{/departments/delete/{id}(id=${department.id})}"
                    onclick="return confirm('Are you sure ?');"
                    class="btn btn-danger">
                     Delete

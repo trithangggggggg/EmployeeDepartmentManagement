@@ -3,6 +3,7 @@ package org.example.employeedepartmentmanagement.dto;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.example.employeedepartmentmanagement.entity.EmployeeStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,22 +14,21 @@ public class EmployeeDTO {
 
     private Long id;
 
-    @NotBlank(message = "khong duoc de trong!")
+    @NotBlank(message = "Ten nhan vien khong duoc de trong")
     private String name;
 
-    @NotNull(message = "tuoi khong duoc de trong!")
-    @Min(value = 18, message = "tuoi phai >= 18")
-    @Max(value = 65, message = "tuoi phai <= 65")
+    @NotNull(message = "Tuoi khong duoc de trong")
+    @Min(value = 18, message = "Tuoi phai >= 18")
+    @Max(value = 65, message = "Tuoi phai <= 65")
     private Integer age;
 
-    @NotBlank(message = "avatar khong duoc de trong!")
     private String avatar;
 
-    @NotNull(message = "status khong duoc de trong!")
+    private MultipartFile file;
+
+    @NotNull(message = "Trang thai khong duoc de trong")
     private EmployeeStatus status;
 
-    @NotNull(message = "Department khong duoc de trong!")
+    @NotNull(message = "Phong ban khong duoc de trong")
     private Long departmentId;
-
-    private String departmentName;
 }
