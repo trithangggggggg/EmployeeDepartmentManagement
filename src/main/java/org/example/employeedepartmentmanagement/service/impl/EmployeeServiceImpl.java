@@ -7,6 +7,8 @@ import org.example.employeedepartmentmanagement.entity.Employee;
 import org.example.employeedepartmentmanagement.repository.IDepartmentRepository;
 import org.example.employeedepartmentmanagement.repository.IEmployeeRepository;
 import org.example.employeedepartmentmanagement.service.IEmployeeService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,8 +25,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
     private final IDepartmentRepository departmentRepository;
 
     @Override
-    public List<Employee> findAll() {
-        return employeeRepository.findAll();
+    public Page<Employee> findAll(String search, Pageable pageable) {
+        if (search.isEmpty()) {
+            return employeeRepository.findAll(pageable);
+        }
+
+        return employeeRepository.findAllByNameContainingIgnoreCase(search, pageable);
     }
 
     @Override

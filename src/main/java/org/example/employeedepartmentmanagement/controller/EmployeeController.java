@@ -3,8 +3,13 @@ package org.example.employeedepartmentmanagement.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.employeedepartmentmanagement.dto.EmployeeDTO;
+import org.example.employeedepartmentmanagement.entity.Employee;
 import org.example.employeedepartmentmanagement.service.IDepartmentService;
 import org.example.employeedepartmentmanagement.service.IEmployeeService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,8 +24,18 @@ public class EmployeeController {
     private final IDepartmentService departmentService;
 
     @GetMapping
-    public String getAllEmployees(Model model) {
-        model.addAttribute("employees", employeeService.findAll());
+    public String getAllEmployees(
+            @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+            @RequestParam(name = "search", defaultValue = "") String search,
+            @RequestParam(name = "sort", defaultValue = "id,asc") String sort,
+            Model model
+    ) {
+        Page<Employee> employees = employeeService.findAll(search, pageable);
+
+        model.addAttribute("employees", employees);
+        model.addAttribute("search", search);
+        model.addAttribute("sort", sort);
+
         return "employee-list";
     }
 
